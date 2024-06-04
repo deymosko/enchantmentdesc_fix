@@ -1,6 +1,5 @@
 package net.darkhax.enchdesc;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -11,9 +10,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class DescriptionManager {
 
-    private static final Map<Enchantment, MutableComponent> descriptions = new ConcurrentHashMap<>();
+    private final ConfigSchema config;
+    private final Map<Enchantment, MutableComponent> descriptions = new ConcurrentHashMap<>();
 
-    public static MutableComponent getDescription(Enchantment ench) {
+    public DescriptionManager(ConfigSchema config) {
+        this.config = config;
+    }
+
+    public MutableComponent get(Enchantment ench) {
 
         return descriptions.computeIfAbsent(ench, e -> {
 
@@ -24,7 +28,7 @@ public class DescriptionManager {
                 descriptionKey = e.getDescriptionId() + ".description";
             }
 
-            return Component.translatable(descriptionKey).withStyle(ChatFormatting.DARK_GRAY);
+            return Component.translatable(descriptionKey).withStyle(config.style);
         });
     }
 }

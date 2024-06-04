@@ -21,10 +21,12 @@ import java.util.Set;
 public class EnchDescCommon {
 
     private final ConfigSchema config;
+    private final DescriptionManager descriptions;
 
     public EnchDescCommon(Path configPath) {
 
         this.config = ConfigSchema.load(configPath.resolve(Constants.MOD_ID + ".json").toFile());
+        this.descriptions  = new DescriptionManager(this.config);
         Services.EVENTS.addItemTooltipListener(this::onItemTooltip);
     }
 
@@ -48,7 +50,7 @@ public class EnchDescCommon {
 
                                     if (line.getContents() instanceof TranslatableContents translatable && translatable.getKey().equals(enchantment.getDescriptionId())) {
 
-                                        Component descriptionText = DescriptionManager.getDescription(enchantment);
+                                        Component descriptionText = descriptions.get(enchantment);
 
                                         if (config.indentSize > 0) {
 
