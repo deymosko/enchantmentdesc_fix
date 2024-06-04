@@ -15,7 +15,7 @@ the [issue tracker](https://github.com/Darkhax-Minecraft/Enchantment-Description
 
 This is a vanilla bug that only affects Fabric users. Affected players will need to download a mod
 like [ToolTipFix](https://www.curseforge.com/minecraft/mc-mods/tooltipfix) which patches this bug for Fabric. Forge
-users will not experience this issue because Forge includes a built in fix for this bug.
+users will not experience this issue because Forge includes a built-in fix for this bug.
 
 ### How do I add new descriptions?
 
