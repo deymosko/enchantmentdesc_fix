@@ -6,7 +6,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.EnchantmentScreen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -16,7 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 public class EnchDescCommon {
 
@@ -25,8 +24,9 @@ public class EnchDescCommon {
 
     public EnchDescCommon(Path configPath) {
 
+        ItemStack
         this.config = ConfigSchema.load(configPath.resolve(Constants.MOD_ID + ".json").toFile());
-        this.descriptions  = new DescriptionManager(this.config);
+        this.descriptions = new DescriptionManager(this.config);
         Services.EVENTS.addItemTooltipListener(this::onItemTooltip);
     }
 
@@ -38,22 +38,23 @@ public class EnchDescCommon {
 
                 if (!config.onlyDisplayInEnchantingTable || Minecraft.getInstance().screen instanceof EnchantmentScreen) {
 
-                    final Set<Enchantment> enchantments = EnchantmentHelper.getEnchantments(stack).keySet();
+                    final Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
 
                     if (!enchantments.isEmpty()) {
 
                         if (!config.requireKeybindPress || Screen.hasShiftDown()) {
 
-                            for (Enchantment enchantment : enchantments) {
+                            for (Enchantment enchantment : enchantments.keySet()) {
+
+                                final Component fullName = enchantment.getFullname(enchantments.get(enchantment));
 
                                 for (Component line : tooltip) {
 
-                                    if (line.getContents() instanceof TranslatableContents translatable && translatable.getKey().equals(enchantment.getDescriptionId())) {
+                                    if (line.equals(fullName)) {
 
                                         Component descriptionText = descriptions.get(enchantment);
 
                                         if (config.indentSize > 0) {
-
                                             descriptionText = Component.literal(StringUtils.repeat(' ', config.indentSize)).append(descriptionText);
                                         }
 
