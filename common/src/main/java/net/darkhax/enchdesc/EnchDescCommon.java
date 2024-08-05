@@ -24,7 +24,6 @@ public class EnchDescCommon {
 
     public EnchDescCommon(Path configPath) {
 
-        ItemStack
         this.config = ConfigSchema.load(configPath.resolve(Constants.MOD_ID + ".json").toFile());
         this.descriptions = new DescriptionManager(this.config);
         Services.EVENTS.addItemTooltipListener(this::onItemTooltip);
