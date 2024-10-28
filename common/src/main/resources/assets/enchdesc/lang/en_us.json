@@ -189,5 +189,10 @@
   "enchantment.improved_exp.ore_detector.desc": "Using the right mouse button will tell the user about nearby ores.",
   "enchantment.improved_exp.flight.desc": "Allows the wearer to fly.",
   "enchantment.improved_exp.werewolf.desc": "Grants the wearer buffs based on the current moon phase.",
-  "enchantment.improved_exp.fear_of_height.desc": "The wearer will take damage if they are too high."
+  "enchantment.improved_exp.fear_of_height.desc": "The wearer will take damage if they are too high.",
+
+  "__support_galosphere": "https://www.curseforge.com/minecraft/mc-mods/galosphere",
+  "enchantment.galosphere.rupture.desc": "Shatters the saltbound tablet's pillars into shard projectiles once they break.",
+  "enchantment.galosphere.sustain.desc": "Extends the duration of the saltbound tablet's pillars.",
+  "enchantment.galosphere.enfeeble.desc": "Inflicts slowness on entities hit by the saltbound tablet's pillars."
 }
