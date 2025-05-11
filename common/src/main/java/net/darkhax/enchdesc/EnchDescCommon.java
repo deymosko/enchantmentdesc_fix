@@ -5,6 +5,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.EnchantmentScreen;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
@@ -44,23 +45,26 @@ public class EnchDescCommon {
                         if (!config.requireKeybindPress || Screen.hasShiftDown()) {
 
                             for (Enchantment enchantment : enchantments.keySet()) {
-
-                                final Component fullName = enchantment.getFullname(enchantments.get(enchantment));
-
-                                for (Component line : tooltip) {
-
-                                    if (line.equals(fullName)) {
-
-                                        Component descriptionText = descriptions.get(enchantment);
-
-                                        if (config.indentSize > 0) {
-                                            descriptionText = Component.literal(StringUtils.repeat(' ', config.indentSize)).append(descriptionText);
-                                        }
-
-                                        tooltip.add(tooltip.indexOf(line) + 1, descriptionText);
-                                        break;
-                                    }
+                                String enchantmentID = BuiltInRegistries.ENCHANTMENT.getKey(enchantment).toString();
+                                if(BlackList.blacklist.contains(enchantmentID)) {
+                                    continue;
                                 }
+                                    final Component fullName = enchantment.getFullname(enchantments.get(enchantment));
+
+                                    for (Component line : tooltip) {
+
+                                        if (line.equals(fullName)) {
+
+                                            Component descriptionText = descriptions.get(enchantment);
+
+                                            if (config.indentSize > 0) {
+                                                descriptionText = Component.literal(StringUtils.repeat(' ', config.indentSize)).append(descriptionText);
+                                            }
+
+                                            tooltip.add(tooltip.indexOf(line) + 1, descriptionText);
+                                            break;
+                                        }
+                                    }
                             }
                         }
 
